@@ -25,7 +25,19 @@ export default class neworder extends Component {
       }
 
       handleSubmit(event) {
-        //alert('A name was submitted: ' + this.state['name'] +" : " + this.state['desc']);
+        if (this.state['cusCell'] === "" &&	this.state['name'] === "" ) {
+            alert("Please,Enter Name and Phone Number ")
+            return
+        }  
+        if (this.state['name'] === "") {
+            alert("Please, Enter the name")
+            return
+        }
+        if (this.state['cusCell'] === "") {
+            alert("Please, Enter Phone Number")
+            return
+        }
+
         const requestOptions = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -74,14 +86,37 @@ export default class neworder extends Component {
   render() {
     return (
       <div id='order' className='panel'>
-            <div id='neworder'>
-              <ul>
-                  {this.state.items.map(i => (
-                      <li key={i.id}>{i.name} X {i.count}</li>
+          <div id="OrderProduts">
+                <div id='neworder'>
+                    <h2>Cart</h2>
+                    <ul>
+                        {this.state.items.map(i => (
+                            <li key={i.id}>{i.name} quantity: {i.count}</li>
+                        ))}
+                    </ul>
+                </div>
+                <div id='allProducts'>
+                <h2>All Produts</h2>  
+                <table>
+                <thead>
+                <tr>
+                    <th>Products</th>
+                    <th>Description</th>
+                    <th>Add to Cart</th>
+                </tr>
+                </thead>
+                <tbody>
+                {this.state.products.map(i => (
+                <tr key={i.id}><td>{i.name}</td>
+                <td>{i.desc}</td><td><button onClick={() => this.addProduct(i)}>Add</button></td></tr>
                   ))}
-              </ul>
+               </tbody>
+              </table>
+                   
+                </div>
           </div>
-        <form onSubmit={this.handleSubmit} className='panel'>
+          <div id="CustomerRegister">
+                <form onSubmit={this.handleSubmit} className='panel'>
                     <label>
                         Name:
                         <input name='cusName' type="text" value={this.state.cusName} onChange={this.handleInputChange} />
@@ -90,25 +125,9 @@ export default class neworder extends Component {
                         Phone:
                         <input name='cusCell' type="Number" value={this.state.cusCell} onChange={this.handleInputChange} />
                     </label>
-                    <input type="submit" value="Create new order" />
+                    <input type="submit" value="Register order" />
                 </form>
-
-          <div id='neworder'>
-              <ul>
-                  {this.state.items.map(i => (
-                      <li key={i.id}>{i.name} X {i.count}</li>
-                  ))}
-              </ul>
-
-          </div>
-          <div id='neworderProds'>  
-              <ul>
-              <h2>Cart</h2>
-                  {this.state.products.map(i => (
-                      <li key={i.id}>{i.name} <button onClick={() => this.addProduct(i)}>Add</button></li>
-                  ))}
-              </ul>
-          </div>
+            </div> 
       </div>
     )
   }

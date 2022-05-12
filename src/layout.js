@@ -7,16 +7,16 @@ const Layout = () => {
       <nav>
         <ul>
           <li>
-            <Link to="/">New order</Link>
+            <Link to="/">New Order</Link>
           </li>
           <li>
-            <Link to="/newcustomer">New customer</Link>
+            <Link to="/newcustomer">New Customer</Link>
           </li>
           <li>
-              <Link to="/orderhistory">Order history</Link>
+            <Link to="/productpage">New Product</Link>
           </li>
           <li>
-            <Link to="/productpage">New/Edit product</Link>
+              <Link to="/orderhistory">Order History</Link>
           </li>
         </ul>
       </nav>

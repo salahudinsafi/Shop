@@ -24,8 +24,10 @@ export default class OrderHist extends Component {
     });
   }
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.state['name'] + this.state['cellnum']);
-    
+    if (this.state['cusCell'] === "" &&	this.state['name'] === "" ) {
+      alert("Please, Enter either Name or Phone Number")
+      return
+    }  
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -53,6 +55,7 @@ export default class OrderHist extends Component {
   render() {
     return (
       <div className="panel">
+          <h2>Serach for order</h2>
           <form onSubmit={this.handleSubmit}>
           <label>
               Name:
@@ -66,17 +69,28 @@ export default class OrderHist extends Component {
           </form>
           <div>
             <div>
-                <ul>
-                    {this.state.orders.map(o => (
-                        <li key={o.oid}>Order ID: {o.oid} Customer name {o.name}  Phone Number:{o.cellnum} <button onClick={() => this.getOrder(o.oid)}>details</button></li>
-                        
-                    ))}
-                </ul>
+            <table id="OrderHistoryTabell">
+                <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer Name</th>
+                    <th>Phone Number</th>
+                    <th>Show</th>
+                </tr>
+                </thead>
+                <tbody>
+                {this.state.orders.map(i => (
+                <tr key={i.oid}><td>{i.oid}</td>
+                <td>{i.name}</td><td>{i.cellnum}</td><td><button onClick={() => this.getOrder(i.oid)}>Details</button></td></tr>
+                  ))}
+               </tbody>
+              </table>
+               
             </div>
             <div>
                 <ul>
                     {this.state.orderitems.map(i => (
-                        <li key={i.id}>Product: {i.pName} quntity {i.count}</li>
+                        <li key={i.id}>Product: {i.pName} Quntity: {i.count}</li>
                     ))}
                 </ul>
             </div>

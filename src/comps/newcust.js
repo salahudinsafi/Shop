@@ -21,10 +21,17 @@ export default class Newcust extends Component {
         });
       }
       handleSubmit(event) {
-        //alert('A name was submitted: ' + this.state['name'] + this.state['cellnum']);
-        if (this.state['name'] === "") {
-          alert("Enter Name")
+        if (this.state['cusCell'] === "" && this.state['name'] === "" ) {
+          alert("Please,Enter Name and Phone Number ")
           return
+        }  
+        if (this.state['name'] === "") {
+            alert("Please, Enter the name")
+            return
+        }
+        if (this.state['cusCell'] === "") {
+            alert("Please, Enter Phone Number")
+            return
         }
         const requestOptions = {
           method: 'POST',
@@ -33,15 +40,15 @@ export default class Newcust extends Component {
         };
         fetch('http://127.0.0.1:5000/newcustomer', requestOptions)
           .then(response => response)
-          .then(data => this.setState({ postId: data.id }));
-           
+          .then(data => data.ok === true ? alert("Customer Registration Completed") : alert("Error: somthing went wrong"));
         event.preventDefault();
       }
     
       render() {
         return (
-        <div>
-          <form onSubmit={this.handleSubmit} className='panel'>
+        <div className='panel'>
+          <h2>Register Customer</h2>
+          <form onSubmit={this.handleSubmit}>
             <label>
               Name:
               <input name='name' type="text" value={this.state.name} onChange={this.handleInputChange} />
@@ -52,8 +59,6 @@ export default class Newcust extends Component {
             </label>
             <input type="submit" value="Submit" />
           </form>
-
-
         </div>
         );
       }

@@ -37,7 +37,15 @@ export default class ProdPage extends Component {
         });
       }
       handleSubmit(event) {
-        //alert('A name was submitted: ' + this.state['name'] +" : " + this.state['desc']);
+        if (this.state['desc'] === "" &&	this.state['name'] === "" ) {
+          alert("Please,Enter Name and Phone Number ")
+          return
+      }  
+      if (this.state['name'] === "") {
+          alert("Please, Enter the name")
+          return
+      }
+      
         const requestOptions = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -47,12 +55,14 @@ export default class ProdPage extends Component {
         fetch('http://127.0.0.1:5000/productpage', requestOptions)
           .then(response => response)
           .then(data => data.ok === true ? alert("Products is add") : alert("Error: Products is not add"));
+
           
         event.preventDefault();
     }
     render() {
         return (
         <div className='panel'>
+          <h2>Register New Products</h2>
             <div>
                 <form onSubmit={this.handleSubmit} className='panel'>
                     <label>

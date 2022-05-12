@@ -1,1 +1,1 @@
-For starte både react og python filen må kjøres
+For starte; både react og python filen må kjøres

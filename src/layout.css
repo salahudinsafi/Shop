@@ -25,3 +25,17 @@ li a {
     color: inherit; /* blue colors for links too */
     text-decoration: inherit; /* no underline */
 }
+
+th{
+    text-align: left;
+    padding-right: 35px;
+}
+
+input{
+    
+    margin: 2px;
+
+}
+#OrderHistoryTabell{
+    margin-top: 30px;
+}

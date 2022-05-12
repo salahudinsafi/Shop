@@ -1,5 +1,10 @@
-#order {
-    display: flex;
-    justify-content: space-between;    
-}
 
+#OrderProduts{
+    display: flex;
+    justify-content: space-between;
+}
+#CustomerRegister{
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: 5px;
+}
