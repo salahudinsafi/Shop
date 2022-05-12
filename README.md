@@ -1,3 +1,1 @@
-For å start
-Kjør backend.py
-kjør react "npm start"
+For starte både react og python filen må kjøres
