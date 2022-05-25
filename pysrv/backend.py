@@ -17,22 +17,29 @@ mydb = mysql.connector.connect(
 def hello_world():
     return "<p>Hello, World!</p>"
 
-
+@app.route("/getCustomer")
 def getCustomers():
-    pass
+    cur = mydb.cursor()
+    cur.execute("SELECT * FROM databaseweb.customer") 
+    res = cur.fetchall()
+
+    customerList = []
+    for r in res:
+        customerList.append({'id':r[0], 'name':r[1], 'PhoneNo':r[2]})
+
+    return json.dumps(customerList)
 
 @app.route("/getproducts")
 def getProducts():
     cur = mydb.cursor()
     cur.execute("SELECT * FROM databaseweb.product") 
     res = cur.fetchall()
-   
-
-    l = []
+    productList = []
     for r in res:
-        l.append({'id':r[0], 'name':r[1], 'desc':r[2]})
+        productList.append({'id':r[0], 'name':r[1], 'desc':r[2]})
 
-    return json.dumps(l)
+    return json.dumps(productList)
+
 @app.route('/getorder', methods=['GET','POST'])
 def getOrder():
     if request.method == 'POST':
@@ -41,14 +48,12 @@ def getOrder():
         cur = mydb.cursor()
         cur.execute("SELECT * FROM databaseweb.orderitem INNER JOIN databaseweb.product ON orderitem.productId=product.productId where orderId=%s", (oderId,) ) 
         res = cur.fetchall()
-        l = []
+        list = []
         for r in res:
-            l.append({'id':r[0], 'prodId':r[2], 'count':r[3], 'pName':r[5]})
+            list.append({'id':r[0], 'prodId':r[2], 'count':r[3], 'pName':r[5]})
 
-        return json.dumps(l)
+        return json.dumps(list)
     return "something went wrong"
-def getOrders():
-    pass
 
 
 # add
@@ -71,13 +76,11 @@ def newcustomer():
 def search():
     if request.method != 'POST':
         return "Invalid"
-
     c_name = request.json['name']
     c_cellnum = request.json['cellnum']
 
     sql = ""
     val = None
-
     if c_name != "":
         sql = "SELECT * FROM databaseweb.customer WHERE Name=%s"
         val = (c_name,)

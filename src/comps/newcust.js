@@ -4,6 +4,7 @@ export default class Newcust extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            customer: [],
             name: '',
             cellnum: ''
         };
@@ -11,6 +12,22 @@ export default class Newcust extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
       }
+      componentDidMount() {
+        fetch("http://127.0.0.1:5000/getCustomer")
+          .then(res => res.json())
+          .then(
+            (result) => {
+              this.setState({
+                customer: result
+              });
+            },
+            (error) => {
+              this.setState({
+                error
+              });
+            }
+          )
+    }
       handleInputChange(event) {
         const target = event.target;
         const value = target.value;
@@ -59,6 +76,25 @@ export default class Newcust extends Component {
             </label>
             <input type="submit" value="Submit" />
           </form>
+
+          <div>
+              <h2>All customer</h2>
+              <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                </tr>
+                </thead>
+                <tbody>
+                {this.state.customer.map(i => (
+                <tr key={i.id}><td>{i.name}</td>
+                <td>{i.PhoneNo}</td></tr>
+                  ))}
+               </tbody>
+              </table>
+            </div>
+
         </div>
         );
       }

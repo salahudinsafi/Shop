@@ -35,7 +35,7 @@ export default class OrderHist extends Component {
     };
     fetch('http://127.0.0.1:5000/search', requestOptions)
       .then(response => response.json())
-      .then(data => this.setState({ orders: data }));
+      .then(data => data.length > 0 ? this.setState({ orders: data }) : alert("Error: Order not found") );
       
     event.preventDefault();
   }
@@ -47,7 +47,7 @@ export default class OrderHist extends Component {
     };
     fetch('http://127.0.0.1:5000/getorder', requestOptions)
       .then(response => response.json())
-      .then(data => this.setState({orderitems: data }));
+      .then(data => data.length > 0 ? this.setState({orderitems: data }) : alert("Error: details not found"));
 }
 
 
