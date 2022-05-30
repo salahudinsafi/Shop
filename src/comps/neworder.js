@@ -1,18 +1,22 @@
 import './css/neworder.css'
 import React, { Component } from 'react'
 
+
+
 export default class neworder extends Component {
     constructor(props) {
         super(props);
         this.state = {
           items: [],
-          products: [{id: 1, name:"truck"}, {id: 2, name:"lambo"}],
+          products: [],
           cusName:"",
           cusCell:"",
+        
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
       
       handleInputChange(event) {
         const target = event.target;
@@ -21,6 +25,7 @@ export default class neworder extends Component {
     
         this.setState({
           [name]: value
+
         });
       }
 
@@ -37,11 +42,10 @@ export default class neworder extends Component {
             alert("Please, Enter Phone Number")
             return
         }
-
         const requestOptions = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({order:this.state["items"], cusName:this.state["cusName"], cusCell:this.state["cusCell"]})
+          body: JSON.stringify({order:this.state["items"], cusName:this.state["cusName"], cusCell:this.state["cusCell"] })
         };
         
         fetch('http://127.0.0.1:5000/neworder', requestOptions)

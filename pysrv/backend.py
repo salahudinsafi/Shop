@@ -3,6 +3,7 @@ import re
 import mysql.connector, json
 from flask import Flask, request
 from flask_cors import CORS
+from datetime import datetime
 
 app = Flask(__name__)
 CORS(app)
@@ -114,7 +115,8 @@ def newOrder():
     if request.method == 'POST':
         c_name = request.json['name']
         c_description = request.json['desc']
-        
+       
+
         cur = mydb.cursor()
         sql = "INSERT INTO databaseweb.product (Name, Description) VALUES (%s, %s)"
         val = (c_name, c_description)
@@ -130,19 +132,22 @@ def newProduct():
     if request.method == 'POST':
         c_cusname = request.json['cusName']
         c_cuscell = request.json['cusCell']
+        DateTime = datetime.now()
+       
+
         order = request.json['order']
         cusIdquery = "SELECT  idCustomer FROM databaseweb.customer WHERE Name=%s AND PhoneNo=%s"
         val = (c_cusname, c_cuscell)
-    
+        
         cur = mydb.cursor()
         cur.execute(cusIdquery, val)
         cusId = cur.fetchone()
 
-        sql = "INSERT INTO databaseweb.order ( customerId) VALUES (%s)"
-        cur.execute(sql,cusId)
+        sql = "INSERT INTO databaseweb.order (customerId, date) VALUES (%s, %s)"
+        cur.execute(sql,(cusId[0], DateTime))
         orderId = cur.lastrowid
+        
         orderT =[]
-
         for i in order:
             orderT.append((orderId,i["id"],i["count"]))    
         
